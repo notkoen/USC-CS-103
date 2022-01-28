@@ -2,6 +2,8 @@
  * Name: Aaron Kuo
  * Class: USC CSCI 103
  * Assignment: Lab 1 Part 1 - Algorithms & Control Structures
+ * Description: Check user input for how many factors of 2 and 3 there are
+ * 
  * Additional Info: Coded in Visual Studio Code and compiled/debugged with GCC
  */
 
