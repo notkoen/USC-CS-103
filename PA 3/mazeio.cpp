@@ -32,46 +32,51 @@ using namespace std;
  * read (the first two input values).
  *
  *************************************************/
-char** read_maze(char* filename, int* rows, int* cols) {
-    int r,c;
-    
-    ifstream file(filename);
-    
-    if (file.fail()) {
-        cout << "File provided does not exist. Please try again." << endl;
-        file.clear();
-        return NULL;
-    }
-    
-    file >> r >> c;
-    if (file.fail()) {
-        cout << "Number of rows and columns" << endl;
-        return NULL;
-    }
-    *rows = r;
-    *cols = c;
-    
-    char** maze = new char*[r];
-    
-    //takes in exactly the number of words specified
-    //words separated by whitespace
-    for(int i = 0; i < r; i++) {
-        maze[i] = new char[c];
-    }
-    
-    for(int i = 0; i < r; i++) {
-        for(int j = 0; j < c; j++) {
-            file >> maze[i][j];
-            if (maze[i][j] != 'S' && maze[i][j] != 'F' 
-                && maze[i][j] != '#' && maze[i][j] != '.') {
-                    cout << "Error, input format incorrect." << endl;
-                    return NULL;
-                }
-            }
-        }
-    //No more reading/writing to file 
-    file.close();
-    return maze;
+char** read_maze(char* filename, int* rows, int* cols)
+{
+	int r,c;
+	ifstream file(filename);
+	
+	if (file.fail())
+	{
+		cout << "File provided does not exist. Please try again." << endl;
+		file.clear();
+		return NULL;
+	}
+	
+	file >> r >> c;
+	if (file.fail())
+	{
+		cout << "Number of rows and columns" << endl;
+		return NULL;
+	}
+	*rows = r;
+	*cols = c;
+	
+	char** maze = new char*[r];
+	
+	//takes in exactly the number of words specified
+	//words separated by whitespace
+	for(int i = 0; i < r; i++)
+	{
+		maze[i] = new char[c];
+	}
+	
+	for(int i = 0; i < r; i++)
+	{
+		for(int j = 0; j < c; j++)
+		{
+			file >> maze[i][j];
+			if (maze[i][j] != 'S' && maze[i][j] != 'F' && maze[i][j] != '#' && maze[i][j] != '.')
+			{
+				cout << "Error, input format incorrect." << endl;
+				return NULL;
+			}
+		}
+	}
+	//No more reading/writing to file 
+	file.close();
+	return maze;
 }
 
 /*************************************************
@@ -79,12 +84,15 @@ char** read_maze(char* filename, int* rows, int* cols) {
  * same format as the input (rows and columns, then
  * the maze character grid).
  *************************************************/
-void print_maze(char** maze, int rows, int cols) {
-    cout << rows << " " << cols << endl;
-    for (int r = 0; r < rows; r++) {
-        for (int c = 0; c < cols; c++) {
-            cout << maze[r][c];
-        }
-        cout << endl;
-    }
+void print_maze(char** maze, int rows, int cols)
+{
+	cout << rows << " " << cols << endl;
+	for(int r = 0; r < rows; r++)
+	{
+		for(int c = 0; c < cols; c++)
+		{
+			cout << maze[r][c];
+		}
+		cout << endl;
+	}
 }

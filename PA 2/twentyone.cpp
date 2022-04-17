@@ -3,9 +3,7 @@
  * Name: Aaron Kuo
  * USC email: ankuo@usc.edu
  * Additional Info: Coded in VSC and debugged with GCC
- *
  ******************************************************************************/
-
 #include <iostream>
 #include <cstdlib>
 
@@ -25,9 +23,7 @@ const int NUM_CARDS = 52;
  * It is up to you if and how you want to use these 
  */
 const char suit[4] = {'H','S','D','C'};
-const char* type[13] = 
-  {"2","3","4","5","6","7",
-   "8","9","10","J","Q","K","A"};
+const char* type[13] = {"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
 const int value[13] = {2,3,4,5,6,7,8,9,10,10,10,10,11};
 
 /**
@@ -37,17 +33,17 @@ const int value[13] = {2,3,4,5,6,7,8,9,10,10,10,10,11};
  */
 void shuffle(int cards[])
 {
-    int c = -1;
-    int temp = 0;
+	int c = -1;
+	int temp = 0;
 
-    for (int i = 51; i > 0; i--)
-    {
-        c = rand() % (i + 1);
-        //switching the cards
-        temp = cards[i];
-        cards[i] = cards[c];
-        cards[c] = temp;
-    }
+	for (int i = 51; i > 0; i--)
+	{
+		c = rand() % (i + 1);
+		//switching the cards
+		temp = cards[i];
+		cards[i] = cards[c];
+		cards[c] = temp;
+	}
 }
 
 /**
@@ -58,10 +54,9 @@ void shuffle(int cards[])
  */
 void printCard(int id)
 {
-    int s = id/13;
-    int num = id - (s * 13);
-
-    cout << type[num] << "-" << suit[s];
+	int s = id / 13;
+	int num = id - (s*13);
+	cout << type[num] << "-" << suit[s];
 }
 
 /**
@@ -71,9 +66,9 @@ void printCard(int id)
  */
 int cardValue(int id)
 {
-    int s = id/13;
-    int num = id - (s * 13);
-    return value[num];
+	int s = id/13;
+	int num = id - (s * 13);
+	return value[num];
 }
 
 /**
@@ -83,12 +78,12 @@ int cardValue(int id)
  */
 void printHand(int hand[], int numCards)
 {
-    for (int a = 0; a < numCards; a++)
-    {
-        printCard(hand[a]);
-        cout << " ";
-    }
-    cout << endl;
+	for(int a = 0; a < numCards; a++)
+	{
+		printCard(hand[a]);
+		cout << " ";
+	}
+	cout << endl;
 }
 
 /**
@@ -98,223 +93,224 @@ void printHand(int hand[], int numCards)
  */
 int getBestScore(int hand[], int numCards)
 {
-    int sum = 0;
-    int aces[4] = {-1,-1,-1,-1};
-    //idx holds the number of aces as well sa the future idx
-    int idx = 0;
-    
-    // calculates sum treating all aces like 11s
-    //however it takes note of every ace index
-    for (int a = 0; a < numCards; a++)
-    {
-        sum += cardValue(hand[a]);
-        if ((hand[a] + 1 ) % 13 == 0)
-        {
-            aces[idx] = a;
-            idx++;
-        }
-    }
-    
-    if (sum > 21)
-    {
-        for (int i = 0; i < idx; i++)
-        {
-            if (sum > 21) {sum -= 10;}
-        }
-    }
-    return sum;
+	int sum = 0;
+	int aces[4] = {-1,-1,-1,-1};
+	//idx holds the number of aces as well sa the future idx
+	int idx = 0;
+	
+	// calculates sum treating all aces like 11s
+	//however it takes note of every ace index
+	for(int a = 0; a < numCards; a++)
+	{
+		sum += cardValue(hand[a]);
+		if((hand[a] + 1) % 13 == 0)
+		{
+			aces[idx] = a;
+			idx++;
+		}
+	}
+	
+	if(sum > 21)
+	{
+		for(int i = 0; i < idx; i++)
+		{
+			if(sum > 21)
+				{sum -= 10;}
+		}
+	}
+	return sum;
 }
 
 //method checks if the Player Lost, Won, or Tied
 void gameScore(int p[], int d[], int p_idx, int d_idx){
-    // p[] and d[] are phand and dhand. p_idx and d_idx are pIdx and dIdx
-    int p_sum = getBestScore(p, p_idx);
-    int d_sum = getBestScore(d, d_idx);
-    
-    if (d_sum > 21 || p_sum == 21 || (p_sum > d_sum && p_sum < 21))
-    {
-        cout << "Win " << p_sum << " "<< d_sum << endl;
-    }
-    else if (p_sum > 21 || d_sum == 21 || (d_sum > p_sum && d_sum < 21))
-    {
-        cout << "Lose " << p_sum << " "<< d_sum << endl;
-    }
-    else if (p_sum == d_sum)
-    {
-        cout << "Tie " << p_sum << " "<< d_sum << endl;
-    }
-    cout << endl;
+	// p[] and d[] are phand and dhand. p_idx and d_idx are pIdx and dIdx
+	int p_sum = getBestScore(p, p_idx);
+	int d_sum = getBestScore(d, d_idx);
+	
+	if(d_sum > 21 || p_sum == 21 || (p_sum > d_sum && p_sum < 21))
+	{
+		cout << "Win " << p_sum << " "<< d_sum << endl;
+	}
+	else if(p_sum > 21 || d_sum == 21 || (d_sum > p_sum && d_sum < 21))
+	{
+		cout << "Lose " << p_sum << " "<< d_sum << endl;
+	}
+	else if(p_sum == d_sum)
+	{
+		cout << "Tie " << p_sum << " "<< d_sum << endl;
+	}
+	cout << endl;
 }
 
 void setup(int c[], int d[], int p[])
 {
-    //populate deck
-    for (int a = 0; a < 52; a++)
-    {
-        c[a] = a;
-    }
+	//populate deck
+	for (int a = 0; a < 52; a++)
+	{
+		c[a] = a;
+	}
 
-    //shuffle deck
-    shuffle(c);
+	//shuffle deck
+	shuffle(c);
 
-    //card to dealer
-    d[0] = c[1];
-    d[1] = c[3];
-    cout << "Dealer: ? ";
-    printCard(d[1]);
-    cout << endl;
+	//card to dealer
+	d[0] = c[1];
+	d[1] = c[3];
+	cout << "Dealer: ? ";
+	printCard(d[1]);
+	cout << endl;
 
-    //card to player
-    p[0] = c[0];
-    p[1] = c[2];
-    cout << "Player:";
-    printHand(p,2);
+	//card to player
+	p[0] = c[0];
+	p[1] = c[2];
+	cout << "Player:";
+	printHand(p,2);
 }
 
 
 int main(int argc, char* argv[])
 {
-    if(argc < 2)
-    {
-        cout << "Error - Please provide the seed value." << endl;
-        return 1;
-    }
-    
-    int seed = atoi(argv[1]);
-    srand(seed);
+	if(argc < 2)
+	{
+		cout << "Error - Please provide the seed value." << endl;
+		return 1;
+	}
+	
+	int seed = atoi(argv[1]);
+	srand(seed);
 
-    int cards[52];
-    int dhand[9];
-    int phand[9];
-    
-    bool play = true;
-    char input;
-    
-    //while loop represents each game, loops back around each round
-    //uses bool play as breaker, evaluted at the end of each round
-    while(play)
-    {
-        //setup method
-        setup(cards,dhand,phand); 
-        
-        int deck = 4;
-        int dIdx = 2;
-        int pIdx = 2;
-        bool round = true;
-        
-        //checks if player immediately hits 21
-        if (getBestScore(phand, 2) == 21)
-        {
-            //if player already won first off then let dealer hit until hes at 17 or more
-            while(getBestScore(dhand,dIdx) < 17)
-            {
-                dhand[dIdx] = cards[deck];
-                dIdx++;
-                deck++;
-            }
+	int cards[52];
+	int dhand[9];
+	int phand[9];
+	
+	bool play = true;
+	char input;
+	
+	//while loop represents each game, loops back around each round
+	//uses bool play as breaker, evaluted at the end of each round
+	while(play)
+	{
+		//setup method
+		setup(cards,dhand,phand);
+		
+		int deck = 4;
+		int dIdx = 2;
+		int pIdx = 2;
+		bool round = true;
+		
+		//checks if player immediately hits 21
+		if(getBestScore(phand, 2) == 21)
+		{
+			//if player already won first off then let dealer hit until hes at 17 or more
+			while(getBestScore(dhand,dIdx) < 17)
+			{
+				dhand[dIdx] = cards[deck];
+				dIdx++;
+				deck++;
+			}
 
-            //print out dealers hand
-            cout << "Dealer:";
-            printHand(dhand, dIdx);
-            
-            //prints out game outcome
-            gameScore(phand,dhand,pIdx, dIdx);
-            
-            //asks if user wants to play again
-            cout << "Play again? [Y/N]" << endl;
-            cin >> input;
-            round = false;
-        }
+			//print out dealers hand
+			cout << "Dealer:";
+			printHand(dhand, dIdx);
 
-        //while loop represents each round, called until a Bust or a Stand
-        //uses bool round as breaker, evaluted when the round outcome is evaluated
-        while (round)
-        {
-            cout << "Type 'h' to hit and 's' to stay:" << endl;
-            cin >> input;
-            
-            if (input != 's' && input != 'h')
-            {
-                cout << "Please use valid commands.";
-                return 0;
-            }
-            
-            //if player chooses to hit
-            if (input == 'h')
-            {
-                phand[pIdx] = cards[deck];
-                cout << "Player:";
-                printHand(phand, pIdx+1);
-                pIdx++;
-                deck++;
-            }
+			//prints out game outcome
+			gameScore(phand,dhand,pIdx, dIdx);
 
-            //Checks if Player busts
-            if (getBestScore(phand, pIdx) > 21)
-            {
-                cout << "Player busts" << endl;
-                gameScore(phand,dhand,pIdx,dIdx);
-                
-                cout << "Play again? [y/n]" << endl;
-                cin >> input;
-                round = false;
-            }
+			//asks if user wants to play again
+			cout << "Play again? [Y/N]" << endl;
+			cin >> input;
+			round = false;
+		}
 
-            else if (getBestScore(phand, pIdx) == 21)
-            {
-                //if player already won then let dealer hit until hes at 17 or more
-                while(getBestScore(dhand,dIdx) < 17)
-                {
-                    dhand[dIdx] = cards[deck];
-                    dIdx++;
-                    deck++;
-                }
-                
-                //print out dealers hand and game outcome
-                cout << "Dealer:";
-                printHand(dhand, dIdx);
-                gameScore(phand, dhand, pIdx, dIdx);
-                
-                //plays again
-                cout << "Play again? [y/n]" << endl;
-                cin >> input;
-                round = false;
-            }
+		//while loop represents each round, called until a Bust or a Stand
+		//uses bool round as breaker, evaluted when the round outcome is evaluated
+		while(round)
+		{
+			cout << "Type 'h' to hit and 's' to stay:" << endl;
+			cin >> input;
+			
+			if(input != 's' && input != 'h')
+			{
+				cout << "Please use valid commands.";
+				return 0;
+			}
 
-            //if player chooses to stay
-            if (input == 's')
-            {
-                //if player already won then let dealer hit until hes at 17 or more
-                while(getBestScore(dhand,dIdx) < 17)
-                {
-                    dhand[dIdx] = cards[deck];
-                    dIdx++;
-                    deck++;
-                }
-                
-                //prints out dealer hand and announces if the dealer busts
-                cout << "Dealer:";
-                printHand(dhand, dIdx);
-                
-                if (getBestScore(dhand, dIdx) > 21)
-                {
-                    cout << "Dealer busts" << endl;
-                }
-                
-                //prints out game outcome
-                gameScore(phand,dhand,pIdx,dIdx);
-                cout << "Play again? [y/n]" << endl;
-                cin >> input;
-                round = false;
-            }
-        }
-        
-        //checks if the user said anything other than 'y'
-        //in response to Play again? and quits if not
-        if (input != 'y')
-        {
-            play = false;
-        }
-    }
-    return 0;
+			//if player chooses to hit
+			if(input == 'h')
+			{
+				phand[pIdx] = cards[deck];
+				cout << "Player:";
+				printHand(phand, pIdx+1);
+				pIdx++;
+				deck++;
+			}
+
+			//Checks if Player busts
+			if(getBestScore(phand, pIdx) > 21)
+			{
+				cout << "Player busts" << endl;
+				gameScore(phand,dhand,pIdx,dIdx);
+
+				cout << "Play again? [y/n]" << endl;
+				cin >> input;
+				round = false;
+			}
+
+			else if(getBestScore(phand, pIdx) == 21)
+			{
+				//if player already won then let dealer hit until hes at 17 or more
+				while(getBestScore(dhand,dIdx) < 17)
+				{
+					dhand[dIdx] = cards[deck];
+					dIdx++;
+					deck++;
+				}
+				
+				//print out dealers hand and game outcome
+				cout << "Dealer:";
+				printHand(dhand, dIdx);
+				gameScore(phand, dhand, pIdx, dIdx);
+				
+				//plays again
+				cout << "Play again? [y/n]" << endl;
+				cin >> input;
+				round = false;
+			}
+
+			//if player chooses to stay
+			if(input == 's')
+			{
+				//if player already won then let dealer hit until hes at 17 or more
+				while(getBestScore(dhand,dIdx) < 17)
+				{
+					dhand[dIdx] = cards[deck];
+					dIdx++;
+					deck++;
+				}
+
+				//prints out dealer hand and announces if the dealer busts
+				cout << "Dealer:";
+				printHand(dhand, dIdx);
+
+				if(getBestScore(dhand, dIdx) > 21)
+				{
+					cout << "Dealer busts" << endl;
+				}
+
+				//prints out game outcome
+				gameScore(phand,dhand,pIdx,dIdx);
+				cout << "Play again? [y/n]" << endl;
+				cin >> input;
+				round = false;
+			}
+		}
+
+		//checks if the user said anything other than 'y'
+		//in response to Play again? and quits if not
+		if(input != 'y')
+		{
+			play = false;
+		}
+	}
+	return 0;
 }

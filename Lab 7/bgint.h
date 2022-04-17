@@ -12,14 +12,15 @@
 using std::string;
 using std::vector;
 
-class BigInt {
-    public:
-        BigInt(string s, int b = 10); //Convert string to BigInt
-        string to_string(); //Get string representation
-        void add(BigInt foo); //Add another BigInt to this one
-        string Decimal(string str, int b); //Converts number to base ten
-    private:
-        string num;
-        vector<int> v;
-        int base;
+class BigInt
+{
+	public:
+		BigInt(string s, int b = 10); //Convert string to BigInt
+		string to_string(); //Get string representation
+		void add(BigInt foo); //Add another BigInt to this one
+		string Decimal(string str, int b); //Converts number to base ten
+	private:
+		string num;
+		vector<int> v;
+		int base;
 };
